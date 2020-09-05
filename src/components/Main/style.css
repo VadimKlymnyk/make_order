@@ -1,0 +1,33 @@
+@import '~antd/dist/antd.css';
+
+.main {
+  max-width: 1140px;
+  padding: 0 15px;
+  margin: 0 auto;
+  
+}
+@media (max-width: 1199px){
+	.main {
+	  max-width: 960px;
+  }
+}
+@media (max-width: 991px){
+  .main {
+      max-width: 720px;
+  }
+}
+@media (max-width: 768px){
+  .main {
+      max-width: 540px;
+  }
+}
+@media (max-width: 568px){
+  .main {
+      max-width: 100%;
+  }
+}
+@media (max-width: 500px){
+  .main {
+      padding: 0;
+  }
+}

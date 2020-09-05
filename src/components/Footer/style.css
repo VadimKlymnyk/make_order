@@ -1,0 +1,74 @@
+@import '~antd/dist/antd.css';
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 100px;
+  height: 100px;
+}
+@media (max-width: 769px){
+  .footer {
+      flex-direction: column;
+  }
+}
+@media (max-width: 568px){
+  .footer {
+      margin-top: 80px;
+      height: 80px;
+  }
+}
+@media (max-width: 500px){
+  .footer {
+      margin-top: 50px;
+      height: 50px;
+  }
+}
+
+
+.footer-nav{
+  display: flex;
+  align-items: center;
+}
+
+.nav-item{
+  padding: 8px 15px;
+}
+@media (max-width: 500px){
+  .nav-item {
+      padding: 10px;
+  }
+}
+
+.nav-item-a{
+  text-decoration: none;
+  color: #000;
+  font-weight: 600;
+  font-size: 18px;
+  font-family: 'Helvetica Neue','Helvetica','Arial',sans-serif;
+}
+@media (max-width: 991px){
+  .nav-item-a {
+      font-size: 16px;
+  }
+}
+@media (max-width: 568px){
+  .nav-item-a {
+      font-size: 14px;
+  }
+}
+.lang-item{
+  padding: 8px 15px;
+  border: none;
+  background-color: rgba(0,0,0,0);
+  color: #000;
+  font-weight: 600;
+  font-size: 18px;
+  cursor: pointer;
+  font-family: 'Helvetica Neue','Helvetica','Arial',sans-serif;
+}
+@media (max-width: 990px){
+  .lang-item {
+      font-size: 16px;
+  }
+}
