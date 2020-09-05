@@ -19,7 +19,7 @@ function FormOrder() {
 
     const [textLength, setTextLength] = useState(0) 
     const [price, setPrice] = useState(0) 
-    const [duration, setDuration] = useState(0) 
+    const [durationMinutes, setDurationMinutes] = useState(0) 
     const [languageText, setLanguageText] = useState('')
     const [email, setEmail] = useState('')
     const [typeText, setTypeText] = useState('text')
@@ -55,38 +55,39 @@ function FormOrder() {
             const calcDuration = (textLength / multiplierDuration * 60 * multiplierType)+30
 
             calcPrice < minPrice ? setPrice(minPrice) : setPrice(calcPrice)
-            calcDuration < 60 ? setDuration(60) : setDuration(calcDuration)
+            calcDuration < 60 ? setDurationMinutes(60) : setDurationMinutes(calcDuration)
         }else{
             setPrice(0)
-            setDuration(0)
+            setDurationMinutes(0)
         }
     }, [languageText, textLength, typeText]);
 
-    useEffect(() => {
-        if(duration){
-            const calc =(mom, durat) => {
-                const startWork = mom.clone().hour(10).minute(0).second(0)
-                const endWork =  mom.clone().hour(19).minute(0).second(0)
+    const calculation =(date, duration) => {
+        const startWork = date.clone().hour(10).minute(0).second(0)
+        const endWork =  date.clone().hour(19).minute(0).second(0)
 
-                if(mom.days() === 6 || mom.days() === 0 || mom.hour() > 18){
-                    calc(startWork.add(1, 'days'), durat)
+        if(date.days() === 6 || date.days() === 0 || date.hour() > 18){
+            calculation(startWork.add(1, 'days'), duration)
 
-                }else {
-                    const start = mom.hour() < 10 ? startWork.clone() : mom.clone()
-                    const response = start.clone().add(durat, 'minutes')
+        }else {
+            const start = date.hour() < 10 ? startWork.clone() : date.clone()
+            const response = start.clone().add(duration, 'minutes')
 
-                    if(response.format() <= endWork.format()){
-                        setFinalMoment(response)
-                        return response
-                    }else{
-                        const diffDuration = durat -  endWork.diff(start, 'minutes')
-                        calc(start.add(1, 'days'), diffDuration)
-                    }
-                }
+            if(response.format() <= endWork.format()){
+                setFinalMoment(response)
+                return response
+            }else{
+                const diffDuration = duration -  endWork.diff(start, 'minutes')
+                calculation(start.add(1, 'days'), diffDuration)
             }
-            calc(moment(), duration)
         }
-    }, [duration]);
+    }
+
+    useEffect(() => {
+        if(durationMinutes){
+            calculation(moment(), durationMinutes)
+        }
+    }, [durationMinutes]);
 
     useEffect(() => {
         if(finalMoment){
@@ -178,7 +179,7 @@ function FormOrder() {
                         <div className="content-prise">
                             <div className="number">{price.toFixed(2)} грн</div>
                             <div className="time"> 
-                                {duration ? `Термін виконання: ${finalDate} о ${finalTime}`: null}
+                                {durationMinutes ? `Термін виконання: ${finalDate} о ${finalTime}`: null}
                             </div>
                         </div>
                         <div className="button">

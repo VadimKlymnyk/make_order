@@ -218,7 +218,8 @@
 
 .make-order-button:disabled {
   cursor: auto;
-  background-color: #1b5dab;
+  /* background-color: #1b5dab; */
+  background-color:  #eee;
 }
 
 @media (max-width: 991px){
