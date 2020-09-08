@@ -23,21 +23,21 @@ it('duration should be correct 4', () => {
 });
 
 it('price should be correct 1', () => {
-    const duration = getPrice('uk', 4, 'text');
-    expect(duration).toBe(50);
+    const price = getPrice('uk', 4, 'text');
+    expect(price).toBe(50);
 });
 
 it('price should be correct 2', () => {
-    const duration = getPrice('eng', 3613, 'text');
-    expect(duration).toBe(433.5);
+    const price = getPrice('eng', 3613, 'text');
+    expect(price).toBe(433.5);
 });
 
 it('price should be correct 3', () => {
-    const duration = getPrice('', 0, 'text');
-    expect(duration).toBe(0);
+    const price = getPrice('', 0, 'text');
+    expect(price).toBe(0);
 });
 
 it('price should be correct 4', () => {
-    const duration = getPrice('eng', 906, 'pdf');
-    expect(duration).toBe(130.4);
+    const price = getPrice('eng', 906, 'pdf');
+    expect(price).toBe(130.4);
 });
