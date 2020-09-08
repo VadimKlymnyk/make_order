@@ -1,17 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import {
-    Form,
-    Input,
-    // Button,
-    Radio,
-    Select,
-    // Cascader,
-    // DatePicker,
-    // InputNumber,
-    // TreeSelect,
-    // Switch,
-    Col,
-  } from 'antd';
+import {Form, Input, Radio, Select, Col, } from 'antd';
+import {getDuration, getPrice} from './utils.js'
 import moment from 'moment';
 import './Form.css';
 
@@ -46,20 +35,8 @@ function FormOrder() {
     }, [languageText, textLength, email]);
 
     useEffect(() => {
-        if (languageText && textLength) {
-            const multiplierType = (typeText === 'pdf' || typeText === 'else') ? 1.2 : 1
-            const multiplierPrice = languageText === 'eng' ? 0.12 : 0.05
-            const minPrice = languageText === 'eng' ? 120 : 50
-            const multiplierDuration = languageText === 'eng' ? 333 : 1333
-            const calcPrice = textLength * multiplierPrice * multiplierType
-            const calcDuration = (textLength / multiplierDuration * 60 * multiplierType)+30
-
-            calcPrice < minPrice ? setPrice(minPrice) : setPrice(calcPrice)
-            calcDuration < 60 ? setDurationMinutes(60) : setDurationMinutes(calcDuration)
-        }else{
-            setPrice(0)
-            setDurationMinutes(0)
-        }
+        setPrice(getPrice(languageText, textLength, typeText))
+        setDurationMinutes(getDuration(languageText, textLength, typeText))
     }, [languageText, textLength, typeText]);
 
     const calculation =(date, duration) => {
@@ -78,7 +55,7 @@ function FormOrder() {
                 return response
             }else{
                 const diffDuration = duration -  endWork.diff(start, 'minutes')
-                calculation(start.add(1, 'days'), diffDuration)
+                calculation(startWork.add(1, 'days'), diffDuration)
             }
         }
     }
