@@ -12,7 +12,7 @@ it('deadline not should be on Saturday 1', () => {
 
 it('deadline not should be on Saturday 2', () => {
     const start = moment('2020-09-11 20:00:00')
-    const deadline = calculation(start, 222);
+    const deadline = calculation(start, 81000);
     expect(deadline.days()).not.toBe(6);
 });
 

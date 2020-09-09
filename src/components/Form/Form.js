@@ -36,8 +36,6 @@ function FormOrder() {
     useEffect(() => {
         setPrice(getPrice(languageText, textLength, typeText))
         setDurationMinutes(getDuration(languageText, textLength, typeText))
-        console.log(getPrice(languageText, textLength, typeText))
-        console.log(getDuration(languageText, textLength, typeText))
     }, [languageText, textLength, typeText]);
 
     useEffect(() => {
