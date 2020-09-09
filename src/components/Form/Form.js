@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {Form, Input, Radio, Select, Col, } from 'antd';
-import {getDuration, getPrice} from './utils.js'
+import {getDuration, getPrice, calculation} from './utils.js'
 import moment from 'moment';
 import './Form.css';
 
@@ -13,7 +13,6 @@ function FormOrder() {
     const [email, setEmail] = useState('')
     const [typeText, setTypeText] = useState('text')
     const [disabledButton, setDisabledButton] = useState(true)
-    const [finalMoment, setFinalMoment] = useState('')
     const [finalDate, setFinalDate] = useState('')
     const [finalTime, setFinalTime] = useState('')
 
@@ -37,41 +36,18 @@ function FormOrder() {
     useEffect(() => {
         setPrice(getPrice(languageText, textLength, typeText))
         setDurationMinutes(getDuration(languageText, textLength, typeText))
+        console.log(getPrice(languageText, textLength, typeText))
+        console.log(getDuration(languageText, textLength, typeText))
     }, [languageText, textLength, typeText]);
-
-    const calculation =(date, duration) => {
-        const startWork = date.clone().hour(10).minute(0).second(0)
-        const endWork =  date.clone().hour(19).minute(0).second(0)
-
-        if(date.days() === 6 || date.days() === 0 || date.hour() > 18){
-            calculation(startWork.add(1, 'days'), duration)
-
-        }else {
-            const start = date.hour() < 10 ? startWork.clone() : date.clone()
-            const response = start.clone().add(duration, 'minutes')
-
-            if(response.format() <= endWork.format()){
-                setFinalMoment(response)
-                return response
-            }else{
-                const diffDuration = duration -  endWork.diff(start, 'minutes')
-                calculation(startWork.add(1, 'days'), diffDuration)
-            }
-        }
-    }
 
     useEffect(() => {
         if(durationMinutes){
-            calculation(moment(), durationMinutes)
+            const deadline = calculation(moment(), durationMinutes)
+            setFinalDate(deadline.format('DD.MM.YY'))
+            setFinalTime(deadline.format('HH:mm'))
+            
         }
     }, [durationMinutes]);
-
-    useEffect(() => {
-        if(finalMoment){
-            setFinalDate(finalMoment.format('DD.MM.YY'))
-            setFinalTime(finalMoment.format('HH:mm'))
-        }
-    }, [finalMoment]);
 
     const onChangeText =(e) => {
         setTextLength(e.target.value.length)

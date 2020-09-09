@@ -22,3 +22,24 @@ export const getDuration = (lang, length, type) => {
         return 0
     }
 }
+
+export const calculation =(date, duration, array = []) => {
+    const startWork = date.clone().hour(10).minute(0).second(0)
+    const endWork =  date.clone().hour(19).minute(0).second(0)
+
+    if(date.days() === 6 || date.days() === 0 || date.hour() > 18){
+        calculation(startWork.add(1, 'days'), duration, array)
+
+    }else {
+        const start = date.hour() < 10 ? startWork.clone() : date.clone()
+        const response = start.clone().add(duration, 'minutes')
+
+        if(response.format() <= endWork.format()){
+            array.push(response)
+        }else{
+            const diffDuration = duration -  endWork.diff(start, 'minutes')
+            calculation(startWork.add(1, 'days'), diffDuration, array)
+        }
+    }
+    return array[0]
+}
