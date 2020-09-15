@@ -1,6 +1,6 @@
 export const getPrice = (lang, length, type) => {
 
-    if (lang && length && type) {
+    if (lang && length ) {
         const multiplierType = (type === 'pdf' || type === 'else') ? 1.2 : 1
         const multiplierPrice = lang === 'eng' ? 0.12 : 0.05
         const minPrice = lang === 'eng' ? 120 : 50
@@ -12,7 +12,7 @@ export const getPrice = (lang, length, type) => {
     }
 }
 export const getDuration = (lang, length, type) => {
-    if (lang && length && type) {
+    if (lang && length) {
         const multiplierType = (type === 'pdf' || type === 'else') ? 1.2 : 1
         const multiplierDuration = lang === 'eng' ? 333 : 1333
         const calcDuration = Math.floor((length / multiplierDuration * 60 * multiplierType)+30)
